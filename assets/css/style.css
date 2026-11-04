@@ -1,0 +1,734 @@
+/* ==========================================================================
+   Terraza Racquets Club — Site Stylesheet
+   Brand tokens sourced from TerrazaRacquetsClub_BrandGuidelines.pdf (Feb 2026)
+
+   FONT NOTE: Altesse Std, Ogg Display, and Avenir are the brand's licensed
+   Adobe Fonts and are NOT free web fonts. Until an Adobe Fonts kit link is
+   available, this file uses close free alternatives (Fraunces, Cormorant
+   Garamond, Inter). To swap in the real fonts later:
+     1. Add the Adobe Fonts <link> (or self-hosted @font-face) in each
+        HTML <head>, above this stylesheet.
+     2. Update the three --font-* variables below to the real family names.
+   No other changes are needed — every heading/body rule reads from these
+   variables.
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;0,600;1,500&family=Cormorant+Garamond:ital@1&family=Inter:wght@400;500;600&family=Noto+Serif+TC:wght@400;600;700&display=swap');
+
+:root {
+  /* Brand colours — Verde Oscuro dropped as full-black nav/footer base;
+     Limon (yellow) intentionally excluded per brand direction. */
+  --verde-oscuro: #00291d;
+  --verde-oscuro-light: #0d3c2c;
+  --stucco: #e3d6c6;
+  --azul-cielo: #b4c7d3;
+  --terracotta: #924b31;
+  --terracotta-dark: #7a3d27;
+  --salvia: #6f7a5a;
+
+  --bg-page: #f7f2ea;
+  --bg-card: #ffffff;
+  --ink: #1c1e19;
+  --ink-muted: #5b5850;
+  --border: #e2dccf;
+
+  /* Typography — see FONT NOTE above */
+  --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-script: 'Cormorant Garamond', Georgia, serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  /* Traditional Chinese pairing per brand guidelines (思源宋體 / Source Han
+     Serif TC) — Noto Serif TC is the same jointly-developed Adobe/Google
+     typeface family, freely loadable via Google Fonts. */
+  --font-zh: 'Noto Serif TC', 'PMingLiU', serif;
+
+  --container: 1140px;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--ink);
+  background: var(--bg-page);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+.wrap { max-width: var(--container); margin: 0 auto; padding: 0 32px; }
+
+h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 500; margin: 0; color: var(--ink); line-height: 1.15; }
+p { margin: 0; }
+
+.eyebrow {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 30px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border-radius: 2px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+.btn:hover { opacity: 0.85; }
+.btn-primary { background: var(--terracotta); color: #fff; }
+.btn-outline { background: transparent; color: #fff; border-color: rgba(255,255,255,0.5); }
+.btn-outline:hover { border-color: #fff; }
+.btn-dark { background: var(--verde-oscuro); color: #fff; }
+
+/* ============ NAV ============ */
+.site-nav {
+  background: var(--verde-oscuro);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.site-nav .wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 84px;
+}
+.site-nav .logo img { height: 34px; width: auto; }
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.nav-links a { color: var(--stucco); padding: 8px 0; }
+.nav-links a:hover, .nav-links a.active { color: #fff; }
+.nav-links a.active { border-bottom: 1px solid var(--terracotta); }
+.nav-links .disabled { color: rgba(227,214,198,0.35); cursor: default; }
+.nav-links .disabled:hover { color: rgba(227,214,198,0.35); }
+.has-dropdown { position: relative; }
+.dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: var(--verde-oscuro-light);
+  min-width: 180px;
+  padding: 10px 0;
+  margin-top: 8px;
+  box-shadow: 0 12px 24px rgba(0,0,0,0.25);
+}
+.has-dropdown:hover .dropdown { display: block; }
+.dropdown a { display: block; padding: 10px 20px; text-transform: none; letter-spacing: 0.02em; font-weight: 500; }
+.nav-cta { display: flex; align-items: center; gap: 24px; }
+
+/* Mobile nav: no hamburger/toggle for now — links stay always visible and
+   wrap onto their own row under the logo/CTA row instead of hiding behind
+   an interaction. Simpler and can't get "stuck broken." */
+@media (max-width: 900px) {
+  .site-nav .wrap {
+    flex-wrap: wrap;
+    height: auto;
+    padding-top: 14px;
+    padding-bottom: 14px;
+    row-gap: 12px;
+  }
+  .nav-links {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px 22px;
+  }
+  .site-nav .btn { padding: 10px 18px; font-size: 11px; }
+  /* Book Now button is redundant on mobile — every page already has its
+     own booking CTAs, and dropping it keeps the header row tighter. */
+  .nav-cta { display: none; }
+  /* Logo gets its own centered row on mobile now that Book Now is gone.
+     (Site-wide img reset is display:block, so justify-content is used
+     instead of text-align to actually center it.) */
+  .site-nav .logo { width: 100%; display: flex; justify-content: center; }
+  .site-nav .logo img { height: 48px; }
+}
+
+/* ============ HERO ============ */
+.hero {
+  position: relative;
+  background: var(--verde-oscuro);
+  color: #fff;
+  overflow: hidden;
+}
+.hero-bg {
+  position: absolute;
+  top: -12%; left: 0; right: 0;
+  height: 124%;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.9;
+  will-change: transform;
+}
+.hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(0,41,29,0.35) 0%, rgba(0,41,29,0.4) 55%, var(--verde-oscuro) 100%);
+}
+.hero-content {
+  position: relative;
+  text-align: center;
+  padding: 110px 32px 90px;
+  max-width: 720px;
+  margin: 0 auto;
+}
+.hero-content .eyebrow { color: var(--azul-cielo); display: block; margin-bottom: 18px; text-shadow: 0 2px 10px rgba(0,0,0,0.35); }
+.hero-content h1 { color: #fff; font-size: 44px; line-height: 1.2; margin-bottom: 14px; text-shadow: 0 2px 14px rgba(0,0,0,0.4); }
+.hero-content .h1-zh { color: #fff; font-family: var(--font-zh); font-weight: 700; font-size: 24px; line-height: 1.4; margin: 0 auto 22px; text-shadow: 0 2px 10px rgba(0,0,0,0.35); }
+.hero-content .sub { font-size: 16px; color: var(--stucco); max-width: 480px; margin: 0 auto 34px; line-height: 1.7; text-shadow: 0 2px 10px rgba(0,0,0,0.35); }
+
+@media (max-width: 640px) {
+  .hero-content h1 { font-size: 30px; }
+  .hero-content .h1-zh { font-size: 19px; }
+  .hero-content { padding: 80px 24px 60px; }
+}
+
+/* Page header (non-home pages) */
+.page-header {
+  position: relative;
+  background: var(--verde-oscuro);
+  color: #fff;
+  padding: 78px 32px 60px;
+  text-align: center;
+}
+.page-header .eyebrow { color: var(--azul-cielo); display:block; margin-bottom: 12px; }
+.page-header h1 { color: #fff; font-size: 38px; margin-bottom: 10px; }
+.page-header .sub { color: var(--stucco); max-width: 560px; margin: 0 auto; font-size: 15px; line-height: 1.55; }
+
+/* ============ SECTIONS ============ */
+section { padding: 72px 0; }
+.section-tight { padding: 52px 0; }
+.section-alt { background: var(--bg-card); }
+.section-center { text-align: center; }
+.section-head { max-width: 620px; margin: 0 auto 40px; text-align: center; }
+.section-head .eyebrow { color: var(--terracotta); display: block; margin-bottom: 12px; }
+.section-head h2 { font-size: 32px; line-height: 1.2; }
+.section-head p { margin-top: 12px; color: var(--ink-muted); font-size: 15px; line-height: 1.55; }
+.section-cta { margin-top: 40px; text-align: center; }
+
+/* Why Terraza — 3 col */
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+.feature-card { text-align: left; }
+.feature-icon {
+  width: 42px; height: 42px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 20px; color: #fff;
+}
+.feature-icon svg { width: 20px; height: 20px; }
+.feature-card h3 { font-size: 18px; margin-bottom: 10px; }
+.feature-card p { color: var(--ink-muted); font-size: 14.5px; line-height: 1.55; }
+
+/* Get Started cards */
+.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; }
+.action-card {
+  position: relative;
+  border-radius: 4px;
+  overflow: hidden;
+  min-height: 280px;
+  display: flex;
+  align-items: flex-end;
+  color: #fff;
+}
+.action-card-media {
+  position: absolute; inset: 0;
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+}
+.action-card::before {
+  content: "";
+  position: absolute; inset: 0;
+  z-index: 1;
+  background: linear-gradient(180deg, rgba(0,41,29,0.15) 0%, rgba(0,41,29,0.92) 90%);
+}
+.action-card-content { position: relative; z-index: 2; padding: 34px; }
+.action-card h3 { color: #fff; font-size: 22px; margin-bottom: 10px; }
+.action-card h3 .h3-zh { font-size: 16px; font-weight: 500; }
+.action-card p { color: var(--stucco); font-size: 14px; margin-bottom: 20px; }
+.action-card p.zh { margin-top: -14px; }
+
+/* Content blocks with photo (used on Our Courts) */
+.split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  align-items: center;
+}
+.split img { border-radius: 4px; width: 100%; height: 100%; object-fit: cover; aspect-ratio: 4/3; }
+.split img.coach-photo { aspect-ratio: 1/1; object-position: center 20%; }
+.split.reverse .split-media { order: 2; }
+/* Placeholder box for a coach photo that hasn't been supplied yet — same
+   footprint as .coach-photo so layout doesn't shift once the real photo
+   is dropped in. */
+.coach-photo-placeholder {
+  aspect-ratio: 1/1;
+  width: 100%;
+  border-radius: 4px;
+  background: var(--bg-page);
+  border: 1px dashed var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 24px;
+  color: var(--ink-muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+.split h2 { font-size: 28px; margin-bottom: 12px; }
+.split p { color: var(--ink-muted); font-size: 15px; line-height: 1.55; margin-bottom: 12px; }
+
+/* Photo caption under .split-media — used for a short line that belongs
+   to the photo rather than the text column (e.g. Outdoor Courts intro). */
+.split-caption {
+  margin-top: 14px;
+  font-family: var(--font-script);
+  font-style: normal;
+  font-size: 15px;
+  color: var(--ink);
+  line-height: 1.4;
+}
+.split-caption .zh-cap {
+  display: block;
+  font-family: var(--font-zh);
+  font-style: normal;
+  font-size: 12px;
+  line-height: 1.45;
+  margin-top: 3px;
+  color: var(--ink);
+}
+
+.photo-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.photo-row img { width: 100%; height: 100%; object-fit: cover; aspect-ratio: 4/3; border-radius: 4px; }
+@media (max-width: 640px) { .photo-row { grid-template-columns: 1fr; } }
+
+/* Photo carousel (Our Courts gallery) — square crop so mixed portrait/
+   landscape source photos stay a consistent shape. Native horizontal
+   scroll-snap: no JS needed, swipes smoothly on mobile. */
+.carousel {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding: 4px 32px 12px;
+  margin: 0 auto;
+  max-width: var(--container);
+}
+.carousel::-webkit-scrollbar { height: 6px; }
+.carousel::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+.carousel-item {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+  width: min(46vw, 320px);
+  aspect-ratio: 1/1;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.carousel-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.6s cubic-bezier(.16,1,.3,1); }
+.carousel-item:hover img { transform: scale(1.06); }
+@media (max-width: 640px) {
+  .carousel { padding: 4px 24px 12px; }
+  .carousel-item { width: min(70vw, 320px); }
+}
+
+.feature-list { display: grid; gap: 16px; margin: 6px 0 22px; }
+.feature-list-item h4 { font-size: 16px; margin-bottom: 10px; }
+.feature-list-item p { color: var(--ink-muted); font-size: 14.5px; line-height: 1.55; }
+
+.bullet-list { list-style: none; padding: 0; margin: 0 0 22px; display: grid; gap: 10px; }
+/* Positioned (not flex) so long items that wrap onto 2+ lines keep the
+   bullet pinned top-left instead of the whole text item jumping to its
+   own flex line and leaving an orphaned bullet — the bug seen on mobile
+   with longer bullet text. */
+.bullet-list li { position: relative; padding-left: 18px; font-size: 14.5px; color: var(--ink-muted); line-height: 1.5; }
+.bullet-list li::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 7px;
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--terracotta);
+}
+/* Bilingual bullets: Chinese translation drops to its own indented line
+   under the English item. Full styling defined in the BILINGUAL section below. */
+
+/* Numbered steps (How to Book) */
+.steps { list-style: none; margin: 0; padding: 0; counter-reset: step; display: grid; gap: 18px; }
+.steps li {
+  counter-increment: step;
+  display: flex; gap: 16px; align-items: flex-start;
+  font-size: 14.5px; color: var(--ink-muted); line-height: 1.6;
+}
+.steps li::before {
+  content: counter(step);
+  flex-shrink: 0;
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--verde-oscuro); color: #fff;
+  font-family: var(--font-body); font-weight: 600; font-size: 13px;
+  display: flex; align-items: center; justify-content: center;
+}
+/* Bilingual step text — English / Chinese side by side on desktop,
+   stacked on mobile. Used on the "How to Book" steps. */
+.step-text {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px 28px;
+  align-items: baseline;
+}
+.step-text .step-zh {
+  font-family: var(--font-zh);
+  color: var(--ink-muted);
+  font-size: 13.5px;
+  line-height: 1.55;
+}
+@media (max-width: 640px) {
+  .step-text { grid-template-columns: 1fr; gap: 2px; }
+}
+
+/* Booking section card */
+.book-block {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 44px;
+  margin-bottom: 32px;
+}
+.book-block-head { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 20px; margin-bottom: 28px; }
+.book-block-head h2 { font-size: 24px; margin-bottom: 8px; }
+.book-block-head p { color: var(--ink-muted); font-size: 14.5px; max-width: 480px; }
+.book-embed {
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 16px;
+  background: #fafafa;
+}
+.book-embed iframe { width: 100%; height: 640px; border: 0; display: block; }
+.book-fallback { font-size: 13px; color: var(--ink-muted); }
+.book-fallback a { color: var(--terracotta); font-weight: 600; }
+
+/* The icoofit booking widget isn't built to reflow at phone widths — squeezed
+   into a ~250px iframe (book-block's own padding + .wrap's padding stacked)
+   its buttons/calendar overlap and become untappable. Rather than compress
+   it further, render it at a usable width and let mobile users pan/scroll
+   to it horizontally; the "Book Now" / "Open in a new tab" links above and
+   below remain the reliable path regardless. */
+@media (max-width: 640px) {
+  .book-embed {
+    margin-left: -28px;
+    margin-right: -28px;
+    border-radius: 0;
+    border-left: 0;
+    border-right: 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .book-embed iframe { width: 680px; min-width: 680px; height: 820px; }
+}
+
+.class-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 24px; }
+.class-card { border: 1px solid var(--border); border-radius: 4px; padding: 26px; }
+.class-card h4 { font-size: 16px; margin-bottom: 8px; }
+.class-card p { color: var(--ink-muted); font-size: 14px; margin-bottom: 18px; }
+
+/* Trial class callout — single card, text + button side by side */
+.trial-card {
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: 6px;
+  padding: 26px 30px; display: flex; justify-content: space-between; align-items: center;
+  gap: 24px; flex-wrap: wrap;
+}
+.trial-card-text h3 { font-size: 17px; margin-bottom: 6px; }
+.trial-card-text p { color: var(--ink-muted); font-size: 14px; }
+@media (max-width: 640px) { .trial-card { flex-direction: column; align-items: flex-start; } .trial-card > a { width: 100%; justify-content: center; } }
+
+/* ==========================================================================
+   TRACK CARDS — Classes page schedule cards (Beginner/Intermediate). Dates
+   are shown as chips (not buried in a table cell) so they're easy to scan,
+   and each card carries its own Sign Up button next to its own price.
+   ========================================================================== */
+.track-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 20px; }
+.track-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 6px; padding: 28px; }
+.track-card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 6px; }
+.track-card h3 { font-size: 19px; margin-bottom: 4px; }
+.track-time { color: var(--ink-muted); font-size: 14.5px; font-weight: 500; }
+.track-venue-tag {
+  display: inline-block; background: var(--bg-page); border: 1px solid var(--border);
+  color: var(--ink-muted); font-size: 11px; font-weight: 600; letter-spacing: 0.05em;
+  text-transform: uppercase; padding: 5px 11px; border-radius: 2px; white-space: nowrap;
+}
+.track-dates-label {
+  display: block; font-size: 11px; font-weight: 600; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--terracotta); margin: 18px 0 10px;
+}
+.date-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.date-chip {
+  background: var(--bg-page); border: 1px solid var(--border); border-radius: 20px;
+  padding: 6px 14px; font-size: 13px; font-weight: 600; color: var(--ink); white-space: nowrap;
+}
+.track-price-row { display: flex; gap: 32px; margin: 22px 0; padding: 18px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.track-price-item .label { display: block; font-size: 11px; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+.track-price-item .value { font-size: 20px; font-weight: 600; color: var(--ink); font-family: var(--font-display); }
+.track-price-item .was { font-size: 12px; font-weight: 500; font-family: var(--font-body); color: var(--ink-muted); text-decoration: line-through; margin-left: 4px; }
+.track-price-item { position: relative; }
+.discount-tag {
+  display: inline-block; margin-top: 6px; background: var(--terracotta); color: #fff;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;
+  padding: 3px 9px; border-radius: 999px;
+}
+@media (max-width: 900px) { .track-cards { grid-template-columns: 1fr; } }
+
+/* Week-by-week curriculum — header-only visual blocks (no description
+   copy) so it reads as quick reference, not another wall of text. */
+.week-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.week-block { background: var(--bg-card); border: 1px solid var(--border); border-radius: 6px; padding: 22px 16px; text-align: center; }
+.week-block .week-num {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 26px; height: 26px; border-radius: 50%; background: var(--verde-oscuro); color: #fff;
+  font-family: var(--font-body); font-size: 12px; font-weight: 600; margin-bottom: 12px;
+}
+.week-block h4 { font-size: 14px; line-height: 1.35; margin-bottom: 4px; }
+.week-block .zh { font-size: 11.5px; }
+@media (max-width: 900px) { .week-grid { grid-template-columns: repeat(2, 1fr); } }
+
+/* Social / Instagram */
+.social-section { background: var(--verde-oscuro); color: #fff; text-align: center; }
+.social-section .eyebrow { color: var(--azul-cielo); }
+.social-section h2 { color: #fff; font-size: 28px; margin: 14px 0 6px; }
+.social-handle { color: var(--stucco); font-size: 15px; margin-bottom: 34px; }
+.social-handle a { color: var(--stucco); font-weight: 600; }
+.social-handle a:hover { color: #fff; }
+.social-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 4px;
+  margin-bottom: 36px;
+}
+.social-tile { position: relative; aspect-ratio: 1/1; overflow: hidden; display: block; }
+.social-tile img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease; }
+.social-tile:hover img { transform: scale(1.06); }
+.social-tile::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: rgba(0,41,29,0.15);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.social-tile:hover::after { opacity: 1; }
+
+.social-embed { max-width: 1020px; margin: 0 auto 36px; }
+.social-embed iframe { width: 100%; height: 255px; display: block; }
+.icon-instagram { width: 16px; height: 16px; }
+
+@media (max-width: 640px) {
+  .social-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* Footer social row */
+.footer-social { display: flex; gap: 14px; margin-top: 18px; }
+.footer-social a {
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.3);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 0;
+}
+.footer-social a:hover { border-color: #fff; }
+.footer-social svg { width: 16px; height: 16px; stroke: var(--stucco); }
+.footer-social a:hover svg { stroke: #fff; }
+
+/* Footer CTA strip */
+.cta-strip {
+  background: var(--salvia);
+  color: #fff;
+  text-align: center;
+  padding: 56px 32px;
+}
+.cta-strip h2 { color: #fff; font-size: 24px; margin-bottom: 20px; }
+
+/* Map */
+.map-embed iframe { width: 100%; height: 380px; border: 0; display: block; filter: grayscale(0.15); }
+
+/* ============ FOOTER ============ */
+.site-footer { background: var(--terracotta-dark); color: var(--stucco); }
+.footer-top { padding-top: 64px; padding-bottom: 40px; }
+.footer-grid { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 40px; }
+.footer-logo img { height: 30px; margin-bottom: 18px; }
+.footer-tagline { font-family: var(--font-script); font-style: italic; font-size: 18px; color: var(--stucco); }
+.footer-col h5 {
+  font-family: var(--font-body); font-size: 12px; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase; color: #fff;
+  margin-bottom: 18px;
+}
+.footer-col p, .footer-col a { display: block; font-size: 13.5px; color: var(--stucco); margin-bottom: 10px; line-height: 1.6; }
+.footer-col a:hover { color: #fff; }
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.15);
+  padding-top: 22px;
+  padding-bottom: 22px;
+  font-size: 12px;
+  color: rgba(227,214,198,0.7);
+  display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px;
+}
+
+@media (max-width: 900px) {
+  .grid-3, .grid-2, .split, .footer-grid, .class-cards { grid-template-columns: 1fr; }
+  .split-media { order: -1 !important; }
+  section { padding: 60px 0; }
+  .book-block { padding: 28px; }
+}
+
+/* ==========================================================================
+   SCROLL REVEAL — cinematic entrance transitions
+   .reveal      = subtle fade + rise (text blocks, cards, section heads)
+   .reveal-zoom = cinematic zoom + fade (photo blocks: .split-media, .action-card)
+   Add .delay-1 / .delay-2 / .delay-3 to stagger siblings (e.g. grid cards).
+   Toggled by assets/js/scroll-reveal.js via IntersectionObserver.
+   ========================================================================== */
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.8s cubic-bezier(.16,1,.3,1), transform 0.8s cubic-bezier(.16,1,.3,1);
+}
+.reveal.is-visible { opacity: 1; transform: translateY(0); }
+.reveal.delay-1 { transition-delay: 0.12s; }
+.reveal.delay-2 { transition-delay: 0.24s; }
+.reveal.delay-3 { transition-delay: 0.36s; }
+
+.reveal-zoom { opacity: 0; transition: opacity 0.9s ease; }
+.reveal-zoom.is-visible { opacity: 1; }
+.reveal-zoom img,
+.reveal-zoom .action-card-media {
+  transform: scale(1.18);
+  transition: transform 1.4s cubic-bezier(.16,1,.3,1);
+}
+.reveal-zoom.is-visible img,
+.reveal-zoom.is-visible .action-card-media {
+  transform: scale(1);
+  /* Once the entrance animation finishes, hand off to a snappier speed so
+     the hover-zoom below (and any other post-reveal transform) doesn't
+     inherit the slow 1.4s cinematic entrance timing. */
+  transition: transform 0.6s cubic-bezier(.16,1,.3,1);
+}
+.reveal-zoom.delay-1 { transition-delay: 0.1s; }
+.reveal-zoom.delay-1 img,
+.reveal-zoom.delay-1 .action-card-media { transition-delay: 0.1s; }
+
+/* Hover zoom on the "Get Started" photo cards (Book Pickleball Courts /
+   Classes). Media is clipped by .action-card's overflow:hidden, so the
+   scaled-up image stays contained within the card on hover. */
+.action-card:hover .action-card-media {
+  transform: scale(1.06);
+  transition: transform 0.6s cubic-bezier(.16,1,.3,1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .reveal-zoom, .reveal-zoom img, .reveal-zoom .action-card-media, .hero-bg {
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* ==========================================================================
+   BILINGUAL (EN / 繁體中文)
+   Two patterns:
+   1. Same-line pairs — "English · 中文" typed as one string inside a
+      single element (eyebrow labels, h4 sub-headers). Both languages
+      inherit that element's own color/font — no separate span needed.
+      This matches the pattern already used on contact.html (e.g. "Our
+      Address · 地址", "Operating Hours · 營業時間").
+   2. Stacked pairs — Chinese sits directly beneath English, smaller and
+      muted, in Noto Serif TC. Used for paragraph copy and bullet items.
+      Headings (h1/h2) intentionally carry no Chinese line — English only.
+   ========================================================================== */
+.zh {
+  font-family: var(--font-zh);
+  color: var(--ink-muted);
+  font-weight: 400;
+}
+
+/* --- Stacked pairs (paragraphs, bullets) --- */
+.p-zh {
+  font-size: 12px;
+  line-height: 1.5;
+  margin-top: 4px;
+}
+.page-header .sub.p-zh { color: var(--stucco); opacity: 0.8; margin-top: 6px; }
+.feature-list-item .p-zh { margin-top: 3px; margin-bottom: 0; }
+.bullet-list li .zh-inline {
+  display: block;
+  font-family: var(--font-zh);
+  color: var(--ink-muted);
+  font-size: 11.5px;
+  line-height: 1.4;
+  opacity: 0.85;
+  margin-top: 3px;
+}
+
+/* ==========================================================================
+   PRICING TABLES — used on Classes (schedules), Coaches (tier menu), and
+   Events (session/court breakdown). One shared table look, reused everywhere.
+   ========================================================================== */
+.pricing-table { width: 100%; border-collapse: collapse; background: var(--bg-card); border-radius: 4px; overflow: hidden; }
+.pricing-table th, .pricing-table td { padding: 14px 18px; text-align: left; font-size: 13.5px; border-bottom: 1px solid var(--border); }
+.pricing-table th {
+  background: var(--verde-oscuro); color: #fff; font-family: var(--font-body);
+  font-weight: 600; font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.06em;
+  white-space: nowrap;
+}
+.pricing-table td { color: var(--ink-muted); }
+.pricing-table tbody tr:last-child td { border-bottom: 0; }
+.pricing-table tbody tr:nth-child(even) { background: var(--bg-page); }
+
+/* Coaches page: 3-column tier cards, each with its own mini pricing table */
+.pricing-tiers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 32px; }
+.pricing-tier-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
+.pricing-tier-head { background: var(--verde-oscuro); color: #fff; padding: 22px 24px; }
+.pricing-tier-head h3 { color: #fff; font-size: 19px; margin-bottom: 6px; }
+.pricing-tier-head p { color: var(--azul-cielo); font-size: 13px; }
+.pricing-table-tier td:last-child { text-align: right; color: var(--ink); font-weight: 500; }
+@media (max-width: 900px) { .pricing-tiers { grid-template-columns: 1fr; } }
+
+/* ==========================================================================
+   EVENT CARDS — Events page (upcoming + past). Past events reuse the same
+   card, muted, so a future event just moves from one section to the other.
+   ========================================================================== */
+.event-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 6px; padding: 40px; margin-top: 28px; }
+.event-card-head { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 20px; margin-bottom: 8px; }
+.event-tag {
+  display: inline-block; background: var(--terracotta); color: #fff;
+  font-size: 11.5px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 5px 12px; border-radius: 2px; margin-bottom: 12px;
+}
+.event-card h3 { font-size: 26px; margin-bottom: 6px; }
+.event-subtitle { color: var(--ink-muted); font-size: 15px; }
+.event-meta-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--border); }
+.event-meta-item p { margin-top: 8px; font-size: 14px; color: var(--ink-muted); line-height: 1.5; }
+.event-card-footer { margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--border); }
+.event-card-past { text-align: center; padding: 32px 40px; opacity: 0.75; }
+@media (max-width: 900px) {
+  .event-meta-grid { grid-template-columns: 1fr; }
+  .event-card { padding: 28px; }
+}
