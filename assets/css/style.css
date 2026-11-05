@@ -192,6 +192,25 @@ p { margin: 0; }
   .nav-js .nav-links a.active { border-bottom: 0; color: #fff; box-shadow: inset 3px 0 0 var(--terracotta); padding-left: 14px; }
 }
 
+/* Accordion (native <details>, works without JavaScript) */
+.accordion { border: 1px solid var(--border); border-radius: 6px; background: #fff; }
+.accordion summary {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  padding: 18px 22px; cursor: pointer; list-style: none;
+  font-family: var(--font-display, inherit); font-size: 18px; color: var(--ink);
+}
+.accordion summary::-webkit-details-marker { display: none; }
+.accordion summary::after {
+  content: ""; flex: 0 0 auto; width: 9px; height: 9px; margin-left: 4px;
+  border-right: 2px solid var(--terracotta); border-bottom: 2px solid var(--terracotta);
+  transform: rotate(45deg) translateY(-2px); transition: transform .2s;
+}
+.accordion[open] summary::after { transform: rotate(-135deg) translateY(-2px); }
+.accordion summary:focus-visible { outline: 2px solid var(--terracotta); outline-offset: 2px; }
+.accordion-hint { margin-left: auto; font-family: inherit; font-size: 12px; letter-spacing: 0.04em; color: var(--ink-muted); }
+.accordion-body { padding: 20px 22px 22px; border-top: 1px solid var(--border); }
+@media (max-width: 520px) { .accordion-hint { display: none; } .accordion summary { padding: 16px 18px; } .accordion-body { padding: 18px 18px 18px; } }
+
 /* ============ HERO ============ */
 .hero {
   position: relative;
