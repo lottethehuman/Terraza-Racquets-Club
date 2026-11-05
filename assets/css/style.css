@@ -642,6 +642,9 @@ section { padding: 72px 0; }
 .reveal.delay-3 { transition-delay: 0.36s; }
 
 .reveal-zoom { opacity: 0; transition: opacity 0.9s ease; }
+/* Photos start slightly zoomed in (scale 1.18) until revealed; clip them to their
+   frame so the zoomed image never pokes out and causes sideways scrolling. */
+.split-media.reveal-zoom { overflow: hidden; border-radius: 4px; }
 .reveal-zoom.is-visible { opacity: 1; }
 .reveal-zoom img,
 .reveal-zoom .action-card-media {
