@@ -167,6 +167,31 @@ p { margin: 0; }
   .site-nav .logo img { height: 48px; }
 }
 
+/* Hamburger menu (mobile). Hidden by default and only used when assets/js/nav.js
+   has loaded and added the .nav-js class, so a script failure can never hide the menu. */
+.nav-toggle { display: none; }
+@media (max-width: 1100px) {
+  .nav-js .nav-cta { display: none; }
+  .nav-js .site-nav .wrap { height: auto; min-height: 68px; padding-top: 0; padding-bottom: 0; row-gap: 0; flex-wrap: wrap; }
+  .nav-js .site-nav .logo { width: auto; justify-content: flex-start; }
+  .nav-js .site-nav .logo img { height: 38px; }
+  .nav-js .nav-toggle {
+    display: flex; flex-direction: column; justify-content: center; gap: 5px;
+    width: 44px; height: 44px; padding: 11px; margin-right: -11px;
+    background: none; border: 0; cursor: pointer;
+  }
+  .nav-js .nav-toggle span { display: block; height: 2px; background: var(--stucco); border-radius: 2px; transition: transform .2s, opacity .2s; }
+  .nav-js .nav-open .nav-toggle span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-js .nav-open .nav-toggle span:nth-child(2) { opacity: 0; }
+  .nav-js .nav-open .nav-toggle span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .nav-js .site-nav nav { order: 3; width: 100%; display: none; }
+  .nav-js .site-nav.nav-open nav { display: block; padding-bottom: 12px; }
+  .nav-js .nav-links { flex-direction: column; align-items: stretch; justify-content: flex-start; flex-wrap: nowrap; gap: 0; font-size: 13px; letter-spacing: 0.08em; border-top: 1px solid rgba(227,214,198,0.18); }
+  .nav-js .nav-links li { border-bottom: 1px solid rgba(227,214,198,0.1); }
+  .nav-js .nav-links a { display: block; padding: 15px 4px; }
+  .nav-js .nav-links a.active { border-bottom: 0; color: #fff; box-shadow: inset 3px 0 0 var(--terracotta); padding-left: 14px; }
+}
+
 /* ============ HERO ============ */
 .hero {
   position: relative;
